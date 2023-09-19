@@ -1,5 +1,5 @@
 
-import { evaluate } from 'mathjs'
+import { max } from 'mathjs'
 
 export default function QueryProcessor(query: string): string {
   if (query.toLowerCase().includes("shakespeare")) {
@@ -18,8 +18,26 @@ export default function QueryProcessor(query: string): string {
     );
   }
 
-  if (query.includes(" + ") || query.includes(" - ") || query.includes(" * ") || query.includes(" / ")){
-      evaluate(query);
+  const addMatch = query.match(/What is (\d+) plus (\d+)/);
+  if (addMatch) {
+    const x: number = parseInt(addMatch[1]);
+    const y: number = parseInt(addMatch[2]);
+    return (x+y).toString();
+  }
+
+  const addMatch1 = query.match(/What is (\d+) multiplied by (\d+)/);
+  if (addMatch1) {
+    const x: number = parseInt(addMatch1[1]);
+    const y: number = parseInt(addMatch1[2]);
+    return (x*y).toString();
+  }
+
+  const addMatch2 = query.match(/Which of the following numbers is the largest: (\d+), (\d+), (\d+)?/);
+  if (addMatch2) {
+    const x: number = parseInt(addMatch2[1]);
+    const y: number = parseInt(addMatch2[2]);
+    const z: number = parseInt(addMatch2[3]);
+    return (max(x, y, z)).toString();
   }
 
   return "";

@@ -40,5 +40,26 @@ export default function QueryProcessor(query: string): string {
     return (max(x, y, z)).toString();
   }
 
+  const addMatch4 = query.match(/Which of the following numbers are primes: (\d+), (\d+), (\d+), (\d+), (\d+)?/);
+  if (addMatch4) {
+    let s: any;
+    var result = "";
+    for (s in addMatch4) {
+      if (isPrime(s)){
+        result.concat(s.toString())
+      }
+    }
+    return result;
+  }
+
+
+  function isPrime(num: number): boolean {
+    for(let i = 2, s = Math.sqrt(num); i <= s; i++) {
+        if(num % i === 0) {
+          return false;
+        }
+    }
+    return num > 1;
+  }
   return "";
 }
